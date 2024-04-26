@@ -5,12 +5,12 @@ use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct ContestResult {
     pub is_rated: bool,
     pub place: u32,
-    pub performance: u32,
+    pub performance: i32,
     pub contest_name: String,
     pub end_time: DateTime<Local>,
     pub user_screen_name: String,
@@ -20,7 +20,7 @@ static LOG_TABLE: Lazy<Vec<f64>> = Lazy::new(|| (0..=101).map(|i| (i as f64).ln(
 const S: f64 = 724.4744301;
 const R: f64 = 0.8271973364;
 
-pub fn calc_rating(performances: &[u32]) -> u32 {
+pub fn calc_rating(performances: &[i32]) -> u32 {
     if performances.is_empty() {
         return 0;
     }
@@ -58,7 +58,7 @@ pub fn calc_rating(performances: &[u32]) -> u32 {
     rating.round() as u32
 }
 
-fn calc_q(performance: u32, attenuation: u32) -> f64 {
+fn calc_q(performance: i32, attenuation: u32) -> f64 {
     performance as f64 - S * LOG_TABLE[attenuation as usize]
 }
 
