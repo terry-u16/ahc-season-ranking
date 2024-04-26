@@ -1,0 +1,4 @@
+[workspace]
+members = ["rating-core", "crawler", "wasm"]
+default-members = ["crawler"]
+resolver = "2"
