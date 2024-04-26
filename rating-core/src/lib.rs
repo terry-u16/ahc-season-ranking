@@ -1,19 +1,58 @@
-use std::collections::BinaryHeap;
-
 use chrono::{DateTime, Local};
 use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
+use std::collections::BinaryHeap;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
-pub struct ContestResult {
+pub struct RawContestResult {
     pub is_rated: bool,
     pub place: u32,
     pub performance: i32,
     pub contest_name: String,
     pub end_time: DateTime<Local>,
     pub user_screen_name: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ContestResult {
+    pub contest_name: String,
+    pub end_time: DateTime<Local>,
+    pub results: Vec<IndividualResult>,
+}
+
+impl ContestResult {
+    pub fn new(
+        contest_name: String,
+        end_time: DateTime<Local>,
+        results: Vec<IndividualResult>,
+    ) -> Self {
+        Self {
+            contest_name,
+            end_time,
+            results,
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct IndividualResult {
+    pub is_rated: bool,
+    pub place: u32,
+    pub performance: i32,
+    pub user_screen_name: String,
+}
+
+impl IndividualResult {
+    pub fn new(is_rated: bool, place: u32, performance: i32, user_screen_name: String) -> Self {
+        Self {
+            is_rated,
+            place,
+            performance,
+            user_screen_name,
+        }
+    }
 }
 
 static LOG_TABLE: Lazy<Vec<f64>> = Lazy::new(|| (0..=101).map(|i| (i as f64).ln()).collect());
