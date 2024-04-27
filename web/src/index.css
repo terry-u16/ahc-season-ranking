@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Noto Sans JP", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.5;
   color: rgb(255 255 255 / 87%);
@@ -21,38 +21,40 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  margin: 0;
+.user-red {
+  color: #f00;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.user-orange {
+  color: #ff8000;
 }
 
-button {
-  padding: 0.6em 1.2em;
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  transition: border-color 0.25s;
+.user-yellow {
+  color: #c0c000;
 }
 
-button:hover {
-  border-color: #646cff;
+.user-blue {
+  color: #00f;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.user-cyan {
+  color: #00c0c0;
+}
+
+.user-green {
+  color: #008000;
+}
+
+.user-brown {
+  color: #804000;
+}
+
+.user-grey {
+  color: #808080;
+}
+
+.user-unrated {
+  color: #000;
 }
 
 @media (prefers-color-scheme: light) {

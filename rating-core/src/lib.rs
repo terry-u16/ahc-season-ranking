@@ -2,7 +2,7 @@ use chrono::{DateTime, Local};
 use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
-use std::{collections::BinaryHeap, time::Duration};
+use std::collections::BinaryHeap;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
@@ -57,30 +57,6 @@ impl IndividualResult {
             performance,
             user_screen_name,
         }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct Standings {
-    pub standings_data: Vec<StandingsData>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct StandingsData {
-    pub total_result: TotalResult,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct TotalResult {
-    elapsed: u64,
-}
-
-impl TotalResult {
-    pub fn elapsed(&self) -> Duration {
-        Duration::from_nanos(self.elapsed)
     }
 }
 
