@@ -12,6 +12,7 @@ default = ["console_error_panic_hook"]
 
 [dependencies]
 wasm-bindgen = "0.2.84"
+rating-core = { path = "../rating-core" }
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires
@@ -20,4 +21,5 @@ wasm-bindgen = "0.2.84"
 console_error_panic_hook = { version = "0.1.7", optional = true }
 
 [dev-dependencies]
+wasm-bindgen = { version = "0.2.84", features = ["serde-serialize"] }
 wasm-bindgen-test = "0.3.34"

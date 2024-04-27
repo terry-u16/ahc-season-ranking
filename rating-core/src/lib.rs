@@ -2,7 +2,7 @@ use chrono::{DateTime, Local};
 use once_cell::sync::Lazy;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
-use std::collections::BinaryHeap;
+use std::{collections::BinaryHeap, time::Duration};
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
@@ -16,8 +16,10 @@ pub struct RawContestResult {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ContestResult {
     pub contest_name: String,
+    pub is_long_term: bool,
     pub end_time: DateTime<Local>,
     pub results: Vec<IndividualResult>,
 }
@@ -25,11 +27,13 @@ pub struct ContestResult {
 impl ContestResult {
     pub fn new(
         contest_name: String,
+        is_long_term: bool,
         end_time: DateTime<Local>,
         results: Vec<IndividualResult>,
     ) -> Self {
         Self {
             contest_name,
+            is_long_term,
             end_time,
             results,
         }
@@ -37,6 +41,7 @@ impl ContestResult {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct IndividualResult {
     pub is_rated: bool,
     pub place: u32,
@@ -52,6 +57,30 @@ impl IndividualResult {
             performance,
             user_screen_name,
         }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Standings {
+    pub standings_data: Vec<StandingsData>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct StandingsData {
+    pub total_result: TotalResult,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct TotalResult {
+    elapsed: u64,
+}
+
+impl TotalResult {
+    pub fn elapsed(&self) -> Duration {
+        Duration::from_nanos(self.elapsed)
     }
 }
 
