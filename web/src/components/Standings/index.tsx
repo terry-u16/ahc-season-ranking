@@ -1,9 +1,10 @@
-import type { FC } from 'react';
-import { Box } from '@mui/material';
+import { type FC } from 'react';
+import { Stack } from '@mui/material';
 import {
   DataGrid,
   type GridColDef,
   type GridCellParams,
+  GridToolbarQuickFilter,
 } from '@mui/x-data-grid';
 import clsx from 'clsx';
 import { type User } from '../../types';
@@ -12,6 +13,20 @@ import { getColorClassName } from '../../utils/Rating';
 type StandingProps = {
   users: User[];
 };
+
+function QuickSearchToolbar() {
+  return (
+    <Stack
+      direction="row-reverse"
+      sx={{
+        p: 1,
+        pb: 0,
+      }}
+    >
+      <GridToolbarQuickFilter />
+    </Stack>
+  );
+}
 
 const Standings: FC<StandingProps> = (props) => {
   const { users } = props;
@@ -44,17 +59,15 @@ const Standings: FC<StandingProps> = (props) => {
   };
 
   return (
-    <>
-      <Box>
-        <DataGrid
-          rows={users}
-          columns={columns}
-          getRowId={getRowId}
-          pageSizeOptions={[20, 50, 100]}
-          autoHeight
-        ></DataGrid>
-      </Box>
-    </>
+    <DataGrid
+      rows={users}
+      columns={columns}
+      getRowId={getRowId}
+      pageSizeOptions={[20, 50, 100]}
+      autoHeight
+      disableColumnMenu
+      slots={{ toolbar: QuickSearchToolbar }}
+    ></DataGrid>
   );
 };
 
