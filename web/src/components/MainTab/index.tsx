@@ -1,10 +1,12 @@
 import { useState, type FC } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
-import { type User } from '../../types';
+import { type WasmInput, type User } from '../../types';
+import Individual from '../Individual';
 import Standings from '../Standings';
 
 interface MainTabProps {
   users: User[];
+  wasmInput: WasmInput;
 }
 
 interface TabPanelProps {
@@ -30,17 +32,19 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const MainTab: FC<MainTabProps> = (props) => {
-  const [value, setValue] = useState(0);
+  const { users, wasmInput } = props;
+  const [tabValue, setTabValue] = useState(0);
+  const [selectedUser, setSelectedUser] = useState('');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
+          value={tabValue}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
@@ -56,14 +60,20 @@ const MainTab: FC<MainTabProps> = (props) => {
           />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Standings users={props.users} />
+      <CustomTabPanel value={tabValue} index={0}>
+        <Standings
+          users={props.users}
+          onSelectionChange={(users) => {
+            setSelectedUser(users[0]?.toString() ?? '');
+          }}
+        />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
+      <CustomTabPanel value={tabValue} index={1}>
+        <Individual
+          users={users}
+          userName={selectedUser}
+          wasmInput={wasmInput}
+        />
       </CustomTabPanel>
     </Box>
   );

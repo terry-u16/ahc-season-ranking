@@ -5,6 +5,7 @@ import {
   type GridColDef,
   type GridCellParams,
   GridToolbarQuickFilter,
+  type GridRowSelectionModel,
 } from '@mui/x-data-grid';
 import clsx from 'clsx';
 import { type User } from '../../types';
@@ -12,6 +13,7 @@ import { getColorClassName } from '../../utils/Rating';
 
 type StandingProps = {
   users: User[];
+  onSelectionChange: (users: GridRowSelectionModel) => void;
 };
 
 function QuickSearchToolbar() {
@@ -67,6 +69,7 @@ const Standings: FC<StandingProps> = (props) => {
       autoHeight
       disableColumnMenu
       slots={{ toolbar: QuickSearchToolbar }}
+      onRowSelectionModelChange={props.onSelectionChange}
     ></DataGrid>
   );
 };

@@ -47,7 +47,7 @@ const MainView: FC = () => {
               period={period}
               onPeriodChange={onPeriodChange}
             ></SettingPanel>
-            <MainTab users={output.users}></MainTab>
+            <MainTab users={output.users} wasmInput={input}></MainTab>
           </Stack>
         </Box>
       </Paper>

@@ -8,3 +8,14 @@ export const fetchContestResults = async (
 
   return data;
 };
+
+export const shortenContestName = (contestName: string): string => {
+  const regexp = /AtCoder Heuristic Contest (\d{3})/g;
+  const matches = regexp.exec(contestName);
+
+  if (matches === null) {
+    return contestName;
+  } else {
+    return `AHC${matches[1]}`;
+  }
+};
