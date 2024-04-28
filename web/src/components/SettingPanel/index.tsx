@@ -79,7 +79,7 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
             <RadioGroup
               aria-labelledby="period-settngs-group-label"
               name="period-settings-group"
-              defaultValue="all"
+              defaultValue={period.selected}
               onChange={(event) => {
                 onPeriodSelectionChange(event.target.value);
               }}

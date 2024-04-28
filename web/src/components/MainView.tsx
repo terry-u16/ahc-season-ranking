@@ -16,7 +16,7 @@ const MainView: FC = () => {
     fetchContestResults,
   );
   const [period, setPeriod] = useState({
-    selected: 'all',
+    selected: 'year',
     year: '2024',
     since: dayjs('2024-01-01'),
     until: dayjs('2024-12-31'),
@@ -44,7 +44,7 @@ const MainView: FC = () => {
     <Container maxWidth="md" disableGutters>
       <Paper elevation={4}>
         <Box p={3}>
-          <Stack>
+          <Stack spacing={2}>
             <SettingPanel
               period={period}
               onPeriodChange={onPeriodChange}
