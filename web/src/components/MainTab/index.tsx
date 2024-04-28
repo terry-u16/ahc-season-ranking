@@ -1,6 +1,8 @@
 import { useState, type FC } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
+import { type GridRowSelectionModel } from '@mui/x-data-grid';
 import { type WasmInput, type User, type PeriodSetting } from '../../types';
+import HelpView from '../Help';
 import Individual from '../Individual';
 import Standings from '../Standings';
 
@@ -41,6 +43,14 @@ const MainTab: FC<MainTabProps> = (props) => {
     setTabValue(newValue);
   };
 
+  const onSelectedUserChange = (users: GridRowSelectionModel) => {
+    setSelectedUser(users[0]?.toString() ?? '');
+
+    if (users[0] !== undefined) {
+      setTabValue(1);
+    }
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -59,14 +69,17 @@ const MainTab: FC<MainTabProps> = (props) => {
             id="main-tab-individual"
             aria-controls="mani-tabpanel-individual"
           />
+          <Tab
+            label="使い方"
+            id="main-tab-help"
+            aria-controls="mani-tabpanel-help"
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={tabValue} index={0}>
         <Standings
           users={props.users}
-          onSelectionChange={(users) => {
-            setSelectedUser(users[0]?.toString() ?? '');
-          }}
+          onSelectionChange={onSelectedUserChange}
         />
       </CustomTabPanel>
       <CustomTabPanel value={tabValue} index={1}>
@@ -76,6 +89,9 @@ const MainTab: FC<MainTabProps> = (props) => {
           wasmInput={wasmInput}
           period={period}
         />
+      </CustomTabPanel>
+      <CustomTabPanel value={tabValue} index={2}>
+        <HelpView />
       </CustomTabPanel>
     </Box>
   );
