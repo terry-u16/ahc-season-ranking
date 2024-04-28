@@ -2,9 +2,15 @@ import type { FC } from 'react';
 import {
   FormControl,
   FormControlLabel,
+  FormGroup,
   FormLabel,
+  Paper,
   Radio,
   RadioGroup,
+  Stack,
+  Checkbox,
+  Typography,
+  Box,
 } from '@mui/material';
 import { type Dayjs } from 'dayjs';
 import { type PeriodSetting } from '../../types';
@@ -47,53 +53,100 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
     });
   };
 
+  const onShortChange = (short: boolean) => {
+    props.onPeriodChange({
+      ...period,
+      short,
+    });
+  };
+
+  const onLongChange = (long: boolean) => {
+    props.onPeriodChange({
+      ...period,
+      long,
+    });
+  };
+
   return (
-    <>
-      <FormControl>
-        <FormLabel id="period-settngs-group-label"></FormLabel>
-        <RadioGroup
-          aria-labelledby="period-settngs-group-label"
-          name="period-settings-group"
-          defaultValue="all"
-          onChange={(event) => {
-            onPeriodSelectionChange(event.target.value);
-          }}
-        >
-          <FormControlLabel
-            value="all"
-            control={<Radio />}
-            label="全期間"
-            sx={{ margin: '8px 0' }}
-          />
-          <FormControlLabel
-            value="year"
-            control={<Radio />}
-            label={
-              <YearSelect
-                year={period.year}
-                disabled={period.selected !== 'year'}
-                onYearChange={onYearChange}
+    <Paper variant="outlined">
+      <Box textAlign="start">
+        <Stack m={2}>
+          <Box p={1}>
+            <Typography variant="h4">集計条件</Typography>
+          </Box>
+          <FormControl>
+            <FormLabel id="period-settngs-group-label"></FormLabel>
+            <RadioGroup
+              aria-labelledby="period-settngs-group-label"
+              name="period-settings-group"
+              defaultValue="all"
+              onChange={(event) => {
+                onPeriodSelectionChange(event.target.value);
+              }}
+            >
+              <FormControlLabel
+                value="all"
+                control={<Radio />}
+                label="全期間"
+                sx={{ margin: '8px 0' }}
               />
-            }
-            sx={{ margin: '8px 0' }}
-          />
-          <FormControlLabel
-            value="period"
-            control={<Radio />}
-            label={
-              <PeriodSelect
-                since={period.since}
-                until={period.until}
-                disabled={period.selected !== 'period'}
-                onPeriodSinceChange={onPeriodSinceChange}
-                onPeriodUntilChange={onPeriodUntilChange}
+              <FormControlLabel
+                value="year"
+                control={<Radio />}
+                label={
+                  <YearSelect
+                    year={period.year}
+                    disabled={period.selected !== 'year'}
+                    onYearChange={onYearChange}
+                  />
+                }
+                sx={{ margin: '8px 0' }}
               />
-            }
-            sx={{ margin: '8px 0' }}
-          />
-        </RadioGroup>
-      </FormControl>
-    </>
+              <FormControlLabel
+                value="period"
+                control={<Radio />}
+                label={
+                  <PeriodSelect
+                    since={period.since}
+                    until={period.until}
+                    disabled={period.selected !== 'period'}
+                    onPeriodSinceChange={onPeriodSinceChange}
+                    onPeriodUntilChange={onPeriodUntilChange}
+                  />
+                }
+                sx={{ margin: '8px 0' }}
+              />
+            </RadioGroup>
+            <FormGroup>
+              <Stack direction="row" spacing={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={props.period.short}
+                      onChange={(event) => {
+                        onShortChange(event.target.checked);
+                      }}
+                    />
+                  }
+                  label="短期"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={props.period.long}
+                      onChange={(event) => {
+                        onLongChange(event.target.checked);
+                      }}
+                    />
+                  }
+                  label="長期"
+                />
+              </Stack>
+            </FormGroup>
+          </FormControl>
+        </Stack>
+      </Box>
+    </Paper>
   );
 };
 

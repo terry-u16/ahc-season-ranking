@@ -43,4 +43,6 @@ export type PeriodSetting = {
   year: string;
   since: Dayjs;
   until: Dayjs;
+  short: boolean;
+  long: boolean;
 };

@@ -20,6 +20,8 @@ const MainView: FC = () => {
     year: '2024',
     since: dayjs('2024-01-01'),
     until: dayjs('2024-12-31'),
+    short: true,
+    long: true,
   });
 
   const { since, until } = toDuration(period);
@@ -28,8 +30,8 @@ const MainView: FC = () => {
     contestResults: contestResults ?? [],
     since,
     until,
-    includeShort: true,
-    includeLong: true,
+    includeShort: period.short,
+    includeLong: period.long,
   };
 
   const output = calc_ratings(input) as WasmOutput;
