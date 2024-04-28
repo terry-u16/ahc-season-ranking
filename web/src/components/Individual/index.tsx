@@ -160,7 +160,14 @@ const Individual: FC<IndividualProps> = (props) => {
               className={getColorClassName(rating)}
               noWrap
             >
-              {user?.userScreenName ?? ''}
+              <a
+                href={`https://atcoder.jp/users/${user?.userScreenName ?? ''}?contestType=heuristic`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-link-style"
+              >
+                {user?.userScreenName ?? ''}
+              </a>
             </Typography>
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="h5">Rating</Typography>
