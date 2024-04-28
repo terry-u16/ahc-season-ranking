@@ -41,7 +41,7 @@ const MainView: FC = () => {
   };
 
   return (
-    <Container maxWidth="md" disableGutters>
+    <Container maxWidth="md">
       <Paper elevation={4}>
         <Box p={3}>
           <Stack spacing={2}>
