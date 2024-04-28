@@ -28,7 +28,10 @@ import {
   type PeriodSetting,
 } from '../../types';
 import { shortenContestName } from '../../utils/Data';
-import { getColorClassName } from '../../utils/Rating';
+import {
+  getColorClassName,
+  convertPerformanceFromInner,
+} from '../../utils/Rating';
 
 type IndividualProps = {
   users: User[];
@@ -59,6 +62,7 @@ const Individual: FC<IndividualProps> = (props) => {
       .filter((result) => result.userScreenName === userName && result.isRated)
       .map((result) => ({
         ...result,
+        performance: convertPerformanceFromInner(result.performance),
         contestName: shortenContestName(contest.contestName),
         endDate: dayjs(contest.endTime).format('YYYY/MM/DD'),
       })),

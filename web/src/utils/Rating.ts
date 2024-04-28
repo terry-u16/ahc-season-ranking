@@ -30,3 +30,15 @@ export const getColorClassName = (
     return 'user-red';
   }
 };
+
+export const convertPerformanceFromInner = (
+  innerPerformance: number,
+): number => {
+  // https://www.dropbox.com/s/ne358pdixfafppm/AHC_rating.pdf?e=1&dl=0
+  if (innerPerformance >= 400) {
+    return innerPerformance;
+  } else {
+    // いろいろ見る限り四捨五入ではなく切り捨てをしているっぽいけどよく分からない
+    return Math.floor(400 / Math.exp((400 - innerPerformance) / 400));
+  }
+};
