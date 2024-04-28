@@ -64,13 +64,19 @@ const Individual: FC<IndividualProps> = (props) => {
   );
 
   const columns: GridColDef[] = [
-    { field: 'contestName', headerName: 'コンテスト', flex: 1 },
-    { field: 'endDate', headerName: '終了日', width: 120 },
-    { field: 'place', headerName: '順位', width: 80 },
+    {
+      field: 'contestName',
+      headerName: 'コンテスト',
+      flex: 1,
+      resizable: false,
+    },
+    { field: 'endDate', headerName: '終了日', width: 120, resizable: false },
+    { field: 'place', headerName: '順位', width: 80, resizable: false },
     {
       field: 'performance',
       headerName: 'Performance',
       width: 100,
+      resizable: false,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cellClassName: (params: GridCellParams<any, string>) => {
         return params.value != null

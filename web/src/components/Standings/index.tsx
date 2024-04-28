@@ -40,12 +40,19 @@ const Standings: FC<StandingProps> = (props) => {
   }
 
   const columns: GridColDef[] = [
-    { field: 'rank', headerName: '順位', width: 90, hideable: false },
+    {
+      field: 'rank',
+      headerName: '順位',
+      width: 90,
+      hideable: false,
+      resizable: false,
+    },
     {
       field: 'userScreenName',
       headerName: 'ユーザー',
       flex: 1,
       hideable: false,
+      resizable: false,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cellClassName: (params: GridCellParams<any, string>) => {
         return params.value != null
@@ -53,7 +60,13 @@ const Standings: FC<StandingProps> = (props) => {
           : '';
       },
     },
-    { field: 'rating', headerName: 'Rating', width: 100, hideable: false },
+    {
+      field: 'rating',
+      headerName: 'Rating',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
   ];
 
   const getRowId = (user: User) => {
