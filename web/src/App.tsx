@@ -1,6 +1,13 @@
 import { type FC } from 'react';
 import './App.css';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import {
+  Box,
+  CssBaseline,
+  ThemeProvider,
+  Toolbar,
+  createTheme,
+} from '@mui/material';
+import ApplicationBar from './components/ApplicationBar';
 import InitWasm from './components/InitWasm';
 
 const App: FC = () => {
@@ -20,7 +27,11 @@ const App: FC = () => {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <InitWasm />
+        <ApplicationBar />
+        <Box>
+          <Toolbar variant="dense" />
+          <InitWasm />
+        </Box>
       </ThemeProvider>
     </>
   );
