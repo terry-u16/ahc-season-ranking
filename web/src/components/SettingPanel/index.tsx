@@ -25,10 +25,12 @@ type SettingPanelProps = {
 const SettingPanel: FC<SettingPanelProps> = (props) => {
   const { period } = props;
 
-  const onPeriodSelectionChange = (selected: string) => {
+  const onPeriodSelectionChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     props.onPeriodChange({
       ...period,
-      selected,
+      selected: event.target.value as 'all' | 'year' | 'period',
     });
   };
 
@@ -79,10 +81,8 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
             <RadioGroup
               aria-labelledby="period-settngs-group-label"
               name="period-settings-group"
-              defaultValue={period.selected}
-              onChange={(event) => {
-                onPeriodSelectionChange(event.target.value);
-              }}
+              value={period.selected}
+              onChange={onPeriodSelectionChange}
             >
               <FormControlLabel
                 value="all"
