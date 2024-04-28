@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { Share } from '@mui/icons-material';
 import {
   Box,
   Stack,
@@ -9,6 +10,8 @@ import {
   createTheme,
   ThemeProvider,
   responsiveFontSizes,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import {
   DataGrid,
@@ -17,18 +20,25 @@ import {
 } from '@mui/x-data-grid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import { type WasmInput, type User, type IndividualResult } from '../../types';
+import ordinal from 'ordinal';
+import {
+  type WasmInput,
+  type User,
+  type IndividualResult,
+  type PeriodSetting,
+} from '../../types';
 import { shortenContestName } from '../../utils/Data';
 import { getColorClassName } from '../../utils/Rating';
 
 type IndividualProps = {
   users: User[];
   userName: string;
+  period: PeriodSetting;
   wasmInput: WasmInput;
 };
 
 const Individual: FC<IndividualProps> = (props) => {
-  const { users, wasmInput, userName } = props;
+  const { users, wasmInput, userName, period } = props;
   const user = users.find((user) => user.userScreenName === userName);
   const foundUser = user !== undefined;
   const rating = user?.rating ?? 0;
@@ -74,6 +84,39 @@ const Individual: FC<IndividualProps> = (props) => {
     return result.contestName;
   };
 
+  const onShareButtonClick = () => {
+    let text = '[AtCoder Heuristic Season Ranking]\n';
+    text += `${user?.userScreenName}\n`;
+
+    const rank = user?.rank !== undefined ? ordinal(user.rank) : 'Unranked';
+    const rating = user?.rating ?? 0;
+    text += `Season Ranking: ${rank}\n`;
+    text += `Season Rating: ${rating}\n\n`;
+
+    switch (period.selected) {
+      case 'all':
+        text += 'Entire Period\n';
+        break;
+      case 'year':
+        text += `${period.year} season\n`;
+        break;
+      case 'period':
+        text += `${period.since.format('YYYY/MM/DD')} - ${period.until.format('YYYY/MM/DD')}\n`;
+        break;
+    }
+
+    text += `${period.short ? '☑' : '☐'} Short term contests\n`;
+    text += `${period.long ? '☑' : '☐'} Long term contests\n`;
+    text += 'https://ahc-season-ranking.terry-u16.net/';
+    const tag = 'AtCoderHeuristicSeasonRanking';
+    const link =
+      'https://twitter.com/intent/tweet?hashtags=' +
+      tag +
+      '&text=' +
+      encodeURIComponent(text);
+    window.open(link, '_blank', 'noreferrer');
+  };
+
   const showEndDate = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('sm'),
   );
@@ -117,6 +160,11 @@ const Individual: FC<IndividualProps> = (props) => {
               >
                 {rating}
               </Typography>
+              <Tooltip title="Share on X">
+                <IconButton onClick={onShareButtonClick}>
+                  <Share />
+                </IconButton>
+              </Tooltip>
             </Stack>
           </Stack>
         </ThemeProvider>

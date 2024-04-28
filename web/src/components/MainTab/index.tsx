@@ -1,12 +1,13 @@
 import { useState, type FC } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
-import { type WasmInput, type User } from '../../types';
+import { type WasmInput, type User, type PeriodSetting } from '../../types';
 import Individual from '../Individual';
 import Standings from '../Standings';
 
 interface MainTabProps {
   users: User[];
   wasmInput: WasmInput;
+  period: PeriodSetting;
 }
 
 interface TabPanelProps {
@@ -32,7 +33,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const MainTab: FC<MainTabProps> = (props) => {
-  const { users, wasmInput } = props;
+  const { users, wasmInput, period } = props;
   const [tabValue, setTabValue] = useState(0);
   const [selectedUser, setSelectedUser] = useState('');
 
@@ -73,6 +74,7 @@ const MainTab: FC<MainTabProps> = (props) => {
           users={users}
           userName={selectedUser}
           wasmInput={wasmInput}
+          period={period}
         />
       </CustomTabPanel>
     </Box>
