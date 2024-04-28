@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { Stack } from '@mui/material';
+import { Stack, type Theme, useMediaQuery } from '@mui/material';
 import {
   DataGrid,
   type GridColDef,
@@ -67,11 +67,29 @@ const Standings: FC<StandingProps> = (props) => {
       hideable: false,
       resizable: false,
     },
+    {
+      field: 'matchCount',
+      headerName: '参加数',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
+    {
+      field: 'winCount',
+      headerName: '優勝数',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
   ];
 
   const getRowId = (user: User) => {
     return user.userScreenName;
   };
+
+  const showDetail = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.up('sm'),
+  );
 
   return (
     <DataGrid
@@ -83,6 +101,7 @@ const Standings: FC<StandingProps> = (props) => {
       disableColumnMenu
       slots={{ toolbar: QuickSearchToolbar }}
       onRowSelectionModelChange={props.onSelectionChange}
+      columnVisibilityModel={{ matchCount: showDetail, winCount: showDetail }}
     ></DataGrid>
   );
 };

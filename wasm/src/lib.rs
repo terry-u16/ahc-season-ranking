@@ -35,14 +35,24 @@ impl Output {
 pub struct User {
     pub rating: u32,
     pub rank: u32,
+    pub match_count: u32,
+    pub win_count: u32,
     pub user_screen_name: String,
 }
 
 impl User {
-    pub fn new(rating: u32, rank: u32, user_screen_name: String) -> Self {
+    pub fn new(
+        rating: u32,
+        rank: u32,
+        match_count: u32,
+        win_count: u32,
+        user_screen_name: String,
+    ) -> Self {
         Self {
             rating,
             rank,
+            match_count,
+            win_count,
             user_screen_name,
         }
     }
@@ -83,20 +93,28 @@ fn calc_all_ratings(input: &Input) -> Vec<User> {
         .map(|(name, result)| {
             let performances = result.iter().map(|r| r.performance).collect_vec();
             let rating = calc_rating(&performances);
-            (rating, name)
+            let match_count = result.len() as u32;
+            let win_count = result.iter().filter(|r| r.place == 1).count() as u32;
+            (rating, name, match_count, win_count)
         })
-        .sorted_by_key(|&(rating, name)| (Reverse(rating), name));
+        .sorted_by_key(|&(rating, name, _, _)| (Reverse(rating), name));
 
     let mut rank = 1;
     let mut user_with_ranking = vec![];
     let mut prev_rating = u32::MAX;
 
-    for (i, (rating, name)) in users.enumerate() {
+    for (i, (rating, name, match_count, win_count)) in users.enumerate() {
         if rating != prev_rating {
             rank = i + 1;
         }
 
-        user_with_ranking.push(User::new(rating, rank as u32, name.to_string()));
+        user_with_ranking.push(User::new(
+            rating,
+            rank as u32,
+            match_count,
+            win_count,
+            name.to_string(),
+        ));
         prev_rating = rating;
     }
 

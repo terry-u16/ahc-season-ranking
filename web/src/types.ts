@@ -35,6 +35,8 @@ export type WasmOutput = {
 export type User = {
   rating: number;
   rank: number;
+  matchCount: number;
+  winCount: number;
   userScreenName: string;
 };
 

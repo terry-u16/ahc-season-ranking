@@ -42,6 +42,7 @@ const Individual: FC<IndividualProps> = (props) => {
   const user = users.find((user) => user.userScreenName === userName);
   const foundUser = user !== undefined;
   const rating = user?.rating ?? 0;
+  const matchCount = user?.matchCount ?? 0;
   const contests = wasmInput.contestResults.filter((result) => {
     const inPeriod =
       dayjs(wasmInput.since) <= dayjs(result.endTime) &&
@@ -171,6 +172,11 @@ const Individual: FC<IndividualProps> = (props) => {
                   <Share />
                 </IconButton>
               </Tooltip>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="baseline">
+              <Typography variant="h6">コンテスト参加数</Typography>
+              <Typography variant="h5">{matchCount}</Typography>
+              <Typography variant="h6">回</Typography>
             </Stack>
           </Stack>
         </ThemeProvider>
