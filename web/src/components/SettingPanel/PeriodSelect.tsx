@@ -21,7 +21,7 @@ const PeriodSelect: FC<PeriodSelectProps> = (props) => {
   const { since, until, disabled } = props;
 
   return (
-    <Stack direction="row">
+    <Stack direction="row" spacing={1}>
       <LocalizationProvider dateAdapter={DateAdapter} adapterLocale="ja">
         <DatePicker
           label="開始"

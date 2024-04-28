@@ -6,6 +6,9 @@ import {
   Typography,
   useMediaQuery,
   Alert,
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
 } from '@mui/material';
 import {
   DataGrid,
@@ -51,9 +54,9 @@ const Individual: FC<IndividualProps> = (props) => {
   );
 
   const columns: GridColDef[] = [
-    { field: 'contestName', headerName: 'コンテスト', flex: 3 },
+    { field: 'contestName', headerName: 'コンテスト', flex: 1 },
     { field: 'endDate', headerName: '終了日', width: 120 },
-    { field: 'place', headerName: '順位', width: 100 },
+    { field: 'place', headerName: '順位', width: 80 },
     {
       field: 'performance',
       headerName: 'Performance',
@@ -75,6 +78,9 @@ const Individual: FC<IndividualProps> = (props) => {
     theme.breakpoints.up('sm'),
   );
 
+  let responsiveTheme = createTheme();
+  responsiveTheme = responsiveFontSizes(responsiveTheme);
+
   return (
     <Box>
       <Box sx={{ display: foundUser ? 'none' : 'block' }} py={2}>
@@ -83,29 +89,33 @@ const Individual: FC<IndividualProps> = (props) => {
         </Alert>
       </Box>
       <Stack spacing={1}>
-        <Box
-          textAlign="left"
-          p={1}
-          sx={{ display: foundUser ? 'block' : 'none' }}
-        >
-          <Typography
-            variant="h2"
-            fontWeight={500}
-            className={getColorClassName(rating)}
+        <ThemeProvider theme={responsiveTheme}>
+          <Stack
+            textAlign="left"
+            p={1}
+            spacing={1}
+            sx={{ display: foundUser ? 'block' : 'none' }}
           >
-            {user?.userScreenName ?? ''}
-          </Typography>
-          <Stack direction="row" spacing={2} alignItems="baseline">
-            <Typography variant="h5">Rating</Typography>
             <Typography
               variant="h3"
-              fontWeight={600}
+              fontWeight={500}
               className={getColorClassName(rating)}
+              noWrap
             >
-              {rating}
+              {user?.userScreenName ?? ''}
             </Typography>
+            <Stack direction="row" spacing={1} alignItems="baseline">
+              <Typography variant="h5">Rating</Typography>
+              <Typography
+                variant="h4"
+                fontWeight={700}
+                className={getColorClassName(rating)}
+              >
+                {rating}
+              </Typography>
+            </Stack>
           </Stack>
-        </Box>
+        </ThemeProvider>
         <DataGrid
           rows={contestResults}
           columns={columns}

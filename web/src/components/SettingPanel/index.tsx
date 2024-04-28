@@ -59,7 +59,12 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
             onPeriodSelectionChange(event.target.value);
           }}
         >
-          <FormControlLabel value="all" control={<Radio />} label="全期間" />
+          <FormControlLabel
+            value="all"
+            control={<Radio />}
+            label="全期間"
+            sx={{ margin: '8px 0' }}
+          />
           <FormControlLabel
             value="year"
             control={<Radio />}
@@ -70,6 +75,7 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
                 onYearChange={onYearChange}
               />
             }
+            sx={{ margin: '8px 0' }}
           />
           <FormControlLabel
             value="period"
@@ -83,6 +89,7 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
                 onPeriodUntilChange={onPeriodUntilChange}
               />
             }
+            sx={{ margin: '8px 0' }}
           />
         </RadioGroup>
       </FormControl>
