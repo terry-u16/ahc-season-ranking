@@ -83,7 +83,11 @@ const Individual: FC<IndividualProps> = (props) => {
 
   return (
     <Box>
-      <Box sx={{ display: foundUser ? 'none' : 'block' }} py={2}>
+      <Box
+        sx={{ display: foundUser ? 'none' : 'block' }}
+        py={2}
+        textAlign="start"
+      >
         <Alert severity="info">
           「順位」タブでユーザーを選択すると個人成績が表示されます。
         </Alert>
@@ -123,6 +127,7 @@ const Individual: FC<IndividualProps> = (props) => {
           autoHeight
           disableColumnMenu
           columnVisibilityModel={{ endDate: showEndDate }}
+          pageSizeOptions={[20, 50, 100]}
         ></DataGrid>
       </Stack>
     </Box>

@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-import './App.css';
 import {
   Box,
   CssBaseline,
@@ -28,7 +27,7 @@ const App: FC = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ApplicationBar />
-        <Box>
+        <Box my={2}>
           <Toolbar variant="dense" />
           <InitWasm />
         </Box>
