@@ -106,6 +106,30 @@ fn calc_q(performance: i32, attenuation: u32) -> f64 {
     performance as f64 - S * LOG_TABLE[attenuation as usize]
 }
 
+// calculate gp30 according to https://atcoder.jp/posts/170
+pub fn calc_gp30(rank: u32) -> u32 {
+    if rank > 30 {
+        0
+    } else if rank >= 15 {
+        16 - (rank - 15)
+    } else if rank >= 10 {
+        26 - 2 * (rank - 10)
+    } else {
+        match rank {
+            1 => 100,
+            2 => 75,
+            3 => 60,
+            4 => 50,
+            5 => 45,
+            6 => 40,
+            7 => 36,
+            8 => 32,
+            9 => 29,
+            _ => 0,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -134,5 +158,14 @@ mod tests {
         let performances = [467];
         let rating = calc_rating(&performances);
         assert_eq!(rating, 39);
+    }
+
+    #[test]
+    fn calc_gp30_score() {
+        assert_eq!(calc_gp30(1), 100);
+        assert_eq!(calc_gp30(15), 16);
+        assert_eq!(calc_gp30(12), 22);
+        assert_eq!(calc_gp30(20), 11);
+        assert_eq!(calc_gp30(30), 1);
     }
 }

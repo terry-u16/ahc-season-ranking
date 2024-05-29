@@ -81,6 +81,20 @@ const Standings: FC<StandingProps> = (props) => {
       hideable: false,
       resizable: false,
     },
+    {
+      field: 'winCount',
+      headerName: '優勝数',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
+    {
+      field: 'gp30',
+      headerName: 'GP30',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
   ];
 
   const getRowId = (user: User) => {
