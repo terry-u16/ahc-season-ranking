@@ -101,8 +101,10 @@ const Individual: FC<IndividualProps> = (props) => {
 
     const rank = user?.rank !== undefined ? ordinal(user.rank) : 'Unranked';
     const rating = user?.rating ?? 0;
+    const gp30 = user?.gp30 ?? 0;
     text += `Season Ranking: ${rank}\n`;
-    text += `Season Rating: ${rating}\n\n`;
+    text += `Season Rating: ${rating}\n`;
+    text += `Season GP30: ${gp30}\n\n`;
 
     switch (period.selected) {
       case 'all':
