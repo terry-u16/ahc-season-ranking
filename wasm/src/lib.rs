@@ -3,7 +3,7 @@ mod utils;
 use anyhow::{bail, Result};
 use chrono::{DateTime, Local};
 use itertools::Itertools;
-use rating_core::{calc_rating, ContestResult};
+use rating_core::{calc_gp30 as calculate_gp30, calc_rating, ContestResult};
 use serde::{Deserialize, Serialize};
 use std::cmp::Reverse;
 use wasm_bindgen::prelude::*;
@@ -37,6 +37,7 @@ pub struct User {
     pub rank: u32,
     pub match_count: u32,
     pub win_count: u32,
+    pub gp30: u32,
     pub user_screen_name: String,
 }
 
@@ -46,6 +47,7 @@ impl User {
         rank: u32,
         match_count: u32,
         win_count: u32,
+        gp30: u32,
         user_screen_name: String,
     ) -> Self {
         Self {
@@ -53,9 +55,15 @@ impl User {
             rank,
             match_count,
             win_count,
+            gp30,
             user_screen_name,
         }
     }
+}
+
+#[wasm_bindgen]
+pub fn calc_gp30(place: u32) -> u32 {
+    calculate_gp30(place)
 }
 
 #[wasm_bindgen]
@@ -95,15 +103,16 @@ fn calc_all_ratings(input: &Input) -> Vec<User> {
             let rating = calc_rating(&performances);
             let match_count = result.len() as u32;
             let win_count = result.iter().filter(|r| r.place == 1).count() as u32;
-            (rating, name, match_count, win_count)
+            let gp30 = result.iter().map(|r| calc_gp30(r.place)).sum();
+            (rating, name, match_count, win_count, gp30)
         })
-        .sorted_by_key(|&(rating, name, _, _)| (Reverse(rating), name));
+        .sorted_by_key(|&(rating, name, _, _, _)| (Reverse(rating), name));
 
     let mut rank = 1;
     let mut user_with_ranking = vec![];
     let mut prev_rating = u32::MAX;
 
-    for (i, (rating, name, match_count, win_count)) in users.enumerate() {
+    for (i, (rating, name, match_count, win_count, gp30)) in users.enumerate() {
         if rating != prev_rating {
             rank = i + 1;
         }
@@ -113,6 +122,7 @@ fn calc_all_ratings(input: &Input) -> Vec<User> {
             rank as u32,
             match_count,
             win_count,
+            gp30,
             name.to_string(),
         ));
         prev_rating = rating;

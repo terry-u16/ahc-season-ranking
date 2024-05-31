@@ -21,6 +21,7 @@ import {
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import ordinal from 'ordinal';
+import { calc_gp30 } from '../../../public/wasm/wasm';
 import {
   type WasmInput,
   type User,
@@ -65,6 +66,7 @@ const Individual: FC<IndividualProps> = (props) => {
         performance: convertPerformanceFromInner(result.performance),
         contestName: shortenContestName(contest.contestName),
         endDate: dayjs(contest.endTime).format('YYYY/MM/DD'),
+        gp30: calc_gp30(result.place),
       })),
   );
 
@@ -89,6 +91,7 @@ const Individual: FC<IndividualProps> = (props) => {
           : '';
       },
     },
+    { field: 'gp30', headerName: 'GP30', width: 80, resizable: false },
   ];
 
   const getRowId = (result: IndividualResult & { contestName: string }) => {
@@ -101,8 +104,10 @@ const Individual: FC<IndividualProps> = (props) => {
 
     const rank = user?.rank !== undefined ? ordinal(user.rank) : 'Unranked';
     const rating = user?.rating ?? 0;
+    const gp30 = user?.gp30 ?? 0;
     text += `Season Ranking: ${rank}\n`;
-    text += `Season Rating: ${rating}\n\n`;
+    text += `Season Rating: ${rating}\n`;
+    text += `Season GP30: ${gp30}\n\n`;
 
     switch (period.selected) {
       case 'all':
@@ -131,6 +136,7 @@ const Individual: FC<IndividualProps> = (props) => {
   const showEndDate = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('sm'),
   );
+  const showGp30 = useMediaQuery((theme: Theme) => theme.breakpoints.up(450));
 
   let responsiveTheme = createTheme();
   responsiveTheme = responsiveFontSizes(responsiveTheme);
@@ -197,7 +203,7 @@ const Individual: FC<IndividualProps> = (props) => {
           getRowId={getRowId}
           autoHeight
           disableColumnMenu
-          columnVisibilityModel={{ endDate: showEndDate }}
+          columnVisibilityModel={{ endDate: showEndDate, gp30: showGp30 }}
           pageSizeOptions={[20, 50, 100]}
         ></DataGrid>
       </Stack>

@@ -81,15 +81,26 @@ const Standings: FC<StandingProps> = (props) => {
       hideable: false,
       resizable: false,
     },
+    {
+      field: 'gp30',
+      headerName: 'GP30',
+      width: 100,
+      hideable: false,
+      resizable: false,
+    },
   ];
 
   const getRowId = (user: User) => {
     return user.userScreenName;
   };
 
-  const showDetail = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.up('sm'),
+  const showWinCount = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.up(750),
   );
+  const showMatchCount = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.up(625),
+  );
+  const showGp30 = useMediaQuery((theme: Theme) => theme.breakpoints.up(500));
 
   return (
     <DataGrid
@@ -101,7 +112,11 @@ const Standings: FC<StandingProps> = (props) => {
       disableColumnMenu
       slots={{ toolbar: QuickSearchToolbar }}
       onRowSelectionModelChange={props.onSelectionChange}
-      columnVisibilityModel={{ matchCount: showDetail, winCount: showDetail }}
+      columnVisibilityModel={{
+        matchCount: showMatchCount,
+        winCount: showWinCount,
+        gp30: showGp30,
+      }}
     ></DataGrid>
   );
 };

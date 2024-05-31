@@ -37,6 +37,7 @@ export type User = {
   rank: number;
   matchCount: number;
   winCount: number;
+  gp30: number;
   userScreenName: string;
 };
 
