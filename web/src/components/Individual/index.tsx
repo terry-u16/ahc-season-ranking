@@ -21,6 +21,7 @@ import {
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import ordinal from 'ordinal';
+import { calc_gp30_score } from '../../../public/wasm/wasm';
 import {
   type WasmInput,
   type User,
@@ -65,6 +66,7 @@ const Individual: FC<IndividualProps> = (props) => {
         performance: convertPerformanceFromInner(result.performance),
         contestName: shortenContestName(contest.contestName),
         endDate: dayjs(contest.endTime).format('YYYY/MM/DD'),
+        gp30: calc_gp30_score(result.place),
       })),
   );
 
@@ -89,6 +91,7 @@ const Individual: FC<IndividualProps> = (props) => {
           : '';
       },
     },
+    { field: 'gp30', headerName: 'GP30', width: 80, resizable: false },
   ];
 
   const getRowId = (result: IndividualResult & { contestName: string }) => {

@@ -62,6 +62,11 @@ impl User {
 }
 
 #[wasm_bindgen]
+pub fn calc_gp30_score(place: u32) -> u32 {
+    calc_gp30(place)
+}
+
+#[wasm_bindgen]
 pub fn calc_ratings(input: JsValue) -> JsValue {
     match calc_ratings_inner(input) {
         Ok(result) => serde_wasm_bindgen::to_value(&Output::new(result, "".to_string())).unwrap(),
