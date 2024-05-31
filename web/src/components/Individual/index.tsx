@@ -136,7 +136,7 @@ const Individual: FC<IndividualProps> = (props) => {
   const showEndDate = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('sm'),
   );
-  const showGP30 = useMediaQuery((theme: Theme) => theme.breakpoints.up(450));
+  const showGp30 = useMediaQuery((theme: Theme) => theme.breakpoints.up(450));
 
   let responsiveTheme = createTheme();
   responsiveTheme = responsiveFontSizes(responsiveTheme);
@@ -203,7 +203,7 @@ const Individual: FC<IndividualProps> = (props) => {
           getRowId={getRowId}
           autoHeight
           disableColumnMenu
-          columnVisibilityModel={{ endDate: showEndDate, gp30: showGP30 }}
+          columnVisibilityModel={{ endDate: showEndDate, gp30: showGp30 }}
           pageSizeOptions={[20, 50, 100]}
         ></DataGrid>
       </Stack>
