@@ -3,7 +3,7 @@ mod utils;
 use anyhow::{bail, Result};
 use chrono::{DateTime, Local};
 use itertools::Itertools;
-use rating_core::{calc_gp30, calc_rating, ContestResult};
+use rating_core::{calc_gp30 as calculate_gp30, calc_rating, ContestResult};
 use serde::{Deserialize, Serialize};
 use std::cmp::Reverse;
 use wasm_bindgen::prelude::*;
@@ -62,8 +62,8 @@ impl User {
 }
 
 #[wasm_bindgen]
-pub fn calc_gp30_score(place: u32) -> u32 {
-    calc_gp30(place)
+pub fn calc_gp30(place: u32) -> u32 {
+    calculate_gp30(place)
 }
 
 #[wasm_bindgen]
