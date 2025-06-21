@@ -46,7 +46,7 @@ const MainView: FC = () => {
         <Box p={3}>
           <Stack spacing={2}>
             <Alert severity="warning">
-              2025年から適用されたAHC新レーティングシステムには未対応です。ご了承ください。
+              2025年から適用されたAHC新レーティングシステム・GP30には未対応です。ご了承ください。
             </Alert>
             <SettingPanel
               period={period}
