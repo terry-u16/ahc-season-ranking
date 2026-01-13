@@ -17,9 +17,9 @@ const MainView: FC = () => {
   );
   const [period, setPeriod] = useState({
     selected: 'year',
-    year: '2025',
-    since: dayjs('2025-01-01'),
-    until: dayjs('2025-12-31'),
+    year: '2026',
+    since: dayjs('2026-01-01'),
+    until: dayjs('2026-12-31'),
     short: true,
     long: true,
   });
