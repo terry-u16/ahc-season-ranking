@@ -35,6 +35,7 @@ const YearSelect: FC<YearSelectProps> = (props) => {
         <MenuItem value="2023">2023年</MenuItem>
         <MenuItem value="2024">2024年</MenuItem>
         <MenuItem value="2025">2025年</MenuItem>
+        <MenuItem value="2026">2026年</MenuItem>
       </Select>
     </FormControl>
   );
