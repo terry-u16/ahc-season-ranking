@@ -19,7 +19,7 @@ https://ahc-season-ranking.terry-u16.net/
 WSL上での実行のみ確認しています。以下のツール類を事前にインストールください。
 
 - cargo ^1.77.2
-- pnpm ^9.0.6
+- pnpm 12.8.1
 - wasm-pack ^0.12.1
 
 ### crawlerの実行
